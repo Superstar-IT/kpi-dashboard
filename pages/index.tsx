@@ -1,89 +1,55 @@
-import {
-  Typography,
-  Box,
-  Card,
-  Container,
-  Button,
-  styled
-} from '@mui/material';
-import type { ReactElement } from 'react';
-import BaseLayout from 'src/layouts/BaseLayout';
-
-import Link from 'src/components/Link';
 import Head from 'next/head';
+import { Container, Grid } from '@mui/material';
 
-import Logo from 'src/components/LogoSign';
-import Hero from 'src/content/Overview/Hero';
+import SidebarLayout from '@/layouts/SidebarLayout';
 
-const HeaderWrapper = styled(Card)(
-  ({ theme }) => `
-  width: 100%;
-  display: flex;
-  align-items: center;
-  height: ${theme.spacing(10)};
-  margin-bottom: ${theme.spacing(10)};
-`
-);
+import PageHeader from '@/content/Dashboards/Crypto/PageHeader';
+import PageTitleWrapper from '@/components/PageTitleWrapper';
 
-const OverviewWrapper = styled(Box)(
-  ({ theme }) => `
-    overflow: auto;
-    background: ${theme.palette.common.white};
-    flex: 1;
-    overflow-x: hidden;
-`
-);
+import AccountBalance from '@/content/Dashboards/Crypto/AccountBalance';
+import Wallets from '@/content/Dashboards/Crypto/Wallets';
+import AccountSecurity from '@/content/Dashboards/Crypto/AccountSecurity';
+import WatchList from '@/content/Dashboards/Crypto/WatchList';
+import RecentKPIs from '@/content/Management/KPIs/RecentKPIs';
 
-function Overview() {
+function Dashboard() {
   return (
-    <OverviewWrapper>
+    <>
       <Head>
-        <title>Tokyo Free White NextJS Typescript Admin Dashboard</title>
+        <title>KPI Dashboard</title>
       </Head>
-      <HeaderWrapper>
-        <Container maxWidth="lg">
-          <Box display="flex" alignItems="center">
-            <Logo />
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              flex={1}
-            >
-              <Box />
-              <Box>
-                <Button
-                  component={Link}
-                  href="/dashboards/crypto"
-                  variant="contained"
-                  sx={{ ml: 2 }}
-                >
-                  Live Preview
-                </Button>
-              </Box>
-            </Box>
-          </Box>
-        </Container>
-      </HeaderWrapper>
-      <Hero />
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
-        <Typography textAlign="center" variant="subtitle1">
-          Crafted by{' '}
-          <Link
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            BloomUI.com
-          </Link>
-        </Typography>
+      <PageTitleWrapper>
+        <PageHeader title="Welcome, KPI Dashboard!" />
+      </PageTitleWrapper>
+      <Container maxWidth="lg">
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={4}
+        >
+          <Grid item xs={12}>
+            <RecentKPIs />
+          </Grid>
+          <Grid item xs={12}>
+            <AccountBalance />
+          </Grid>
+          <Grid item lg={8} xs={12}>
+            <Wallets />
+          </Grid>
+          <Grid item lg={4} xs={12}>
+            <AccountSecurity />
+          </Grid>
+          <Grid item xs={12}>
+            <WatchList />
+          </Grid>
+        </Grid>
       </Container>
-    </OverviewWrapper>
+    </>
   );
 }
 
-export default Overview;
+Dashboard.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
-Overview.getLayout = function getLayout(page: ReactElement) {
-  return <BaseLayout>{page}</BaseLayout>;
-};
+export default Dashboard;

@@ -95,32 +95,14 @@ const TooltipWrapper = styled(({ className, ...props }: TooltipProps) => (
 }));
 
 function Logo() {
-  const theme = useTheme();
-
   return (
-    <TooltipWrapper
-      title="Tokyo Free White Next.js Typescript Admin Dashboard"
-      arrow
-    >
+    <TooltipWrapper title="Next.js Typescript Admin Dashboard" arrow>
       <LogoWrapper href="/">
-        <Badge
-          sx={{
-            '.MuiBadge-badge': {
-              fontSize: theme.typography.pxToRem(11),
-              right: -2,
-              top: 8
-            }
-          }}
-          overlap="circular"
-          color="success"
-          badgeContent="1.0"
-        >
-          <LogoSignWrapper>
-            <LogoSign>
-              <LogoSignInner />
-            </LogoSign>
-          </LogoSignWrapper>
-        </Badge>
+        <LogoSignWrapper>
+          <LogoSign>
+            <LogoSignInner />
+          </LogoSign>
+        </LogoSignWrapper>
       </LogoWrapper>
     </TooltipWrapper>
   );

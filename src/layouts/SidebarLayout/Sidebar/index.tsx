@@ -9,7 +9,6 @@ import {
   styled,
   Divider,
   useTheme,
-  Button,
   lighten,
   darken
 } from '@mui/material';
@@ -73,24 +72,6 @@ function Sidebar() {
           />
           <SidebarMenu />
         </Scrollbar>
-        <Divider
-          sx={{
-            background: theme.colors.alpha.trueWhite[10]
-          }}
-        />
-        <Box p={2}>
-          <Button
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="contained"
-            color="success"
-            size="small"
-            fullWidth
-          >
-            Upgrade to PRO
-          </Button>
-        </Box>
       </SidebarWrapper>
       <Drawer
         sx={{
@@ -113,6 +94,7 @@ function Sidebar() {
           <Scrollbar>
             <Box mt={3}>
               <Box
+                justifyContent="center"
                 mx={2}
                 sx={{
                   width: 52
