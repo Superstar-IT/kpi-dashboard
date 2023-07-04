@@ -19,7 +19,7 @@ function DashboardCrypto() {
         <title>Crypto Dashboard</title>
       </Head>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader title="" />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid

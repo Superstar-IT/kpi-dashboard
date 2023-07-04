@@ -152,27 +152,8 @@ function EditKpiModal({
         <Button variant="contained" onClick={handleClose}>
           Cancel
         </Button>
-        {type === 'new' && (
-          <Button
-            variant="contained"
-            onClick={editForm.handleSubmit}
-            color="success"
-            disabled={!editForm.isValid || editForm.isSubmitting}
-          >
-            Add
-          </Button>
-        )}
-        {type === 'edit' && (
-          <Button
-            variant="contained"
-            onClick={editForm.handleSubmit}
-            color="success"
-            disabled={!editForm.isValid || editForm.isSubmitting}
-          >
-            Save
-          </Button>
-        )}
-        {type === 'delete' && (
+
+        {type === 'delete' ? (
           <Button
             variant="contained"
             onClick={handleDelete}
@@ -180,6 +161,15 @@ function EditKpiModal({
             disabled={editForm.isSubmitting}
           >
             Delete
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={() => editForm.handleSubmit()}
+            color="success"
+            disabled={!editForm.isValid || editForm.isSubmitting}
+          >
+            {type === 'edit' ? 'Save' : 'Add'}
           </Button>
         )}
       </DialogActions>

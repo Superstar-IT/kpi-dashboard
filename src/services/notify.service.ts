@@ -1,4 +1,3 @@
-import React from 'react';
 import { ToastContent, ToastOptions, toast } from 'react-toastify';
 
 export const useNotify = (options?: ToastOptions) => {
