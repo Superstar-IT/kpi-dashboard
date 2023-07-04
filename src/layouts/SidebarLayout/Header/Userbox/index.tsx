@@ -19,7 +19,6 @@ import { styled } from '@mui/material/styles';
 
 import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
