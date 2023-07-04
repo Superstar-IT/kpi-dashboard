@@ -8,11 +8,20 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [Formik](https://formik.org/)
 - [Yup](https://www.npmjs.com/package/yup)
 
-## Getting Started
+## Live Demo
 
-First, run the development server:
+[DEMO] (https://kpi-dashboard-tau.vercel.app/)
+
+## Quick run
 
 ```bash
+$ git clone https://github.com/Superstar-IT/kpi-dashboard.git
+$ cd kpi-dashboard
+$ cp env-example .env
+
+$ npm install
+
+#First, run the development server:
 npm run dev
 # or
 yarn dev
