@@ -6,9 +6,6 @@ import SidebarLayout from '@/layouts/SidebarLayout';
 import PageHeader from '@/content/Dashboards/Crypto/PageHeader';
 import PageTitleWrapper from '@/components/PageTitleWrapper';
 
-import Wallets from '@/content/Dashboards/Crypto/Wallets';
-import AccountSecurity from '@/content/Dashboards/Crypto/AccountSecurity';
-import WatchList from '@/content/Dashboards/Crypto/WatchList';
 import RecentKPIs from '@/content/Management/KPIs/RecentKPIs';
 
 function Dashboard() {
