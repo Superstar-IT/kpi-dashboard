@@ -11,6 +11,8 @@ import {
   Grid,
   TextField
 } from '@mui/material';
+import { useFormik } from 'formik';
+import { KPISchema } from '@/schema/kpi.schema';
 
 export type EditKpiModalType = 'new' | 'edit' | 'delete';
 
@@ -27,25 +29,34 @@ function EditKpiModal({
   open,
   type
 }: EditKpiModalProps) {
-  const newKPI: KPI = {
-    id: '',
-    name: '',
-    value: '',
-    description: '',
-    createdAt: new Date()
-  };
-  const [kpi, setKPI] = useState<KPI>(selectedValue || newKPI);
   const handleClose = () => {
+    editForm.resetForm();
     onClose(selectedValue);
   };
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
-      setKPI({ ...kpi, [name]: value });
+  const handleDelete = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault();
+      editForm.setSubmitting(true);
+      editForm.setSubmitting(false);
+      onClose(selectedValue);
     },
-    [setKPI]
+    [onClose]
   );
+
+  const editForm = useFormik({
+    initialValues: {
+      name: selectedValue?.name || '',
+      value: selectedValue?.value || '',
+      description: selectedValue?.description || ''
+    },
+    enableReinitialize: true,
+    validationSchema: KPISchema,
+    onSubmit: (values) => {
+      console.log(values);
+      onClose({ ...selectedValue, ...values });
+    }
+  });
 
   return (
     <Dialog onClose={handleClose} open={open} fullWidth>
@@ -68,9 +79,13 @@ function EditKpiModal({
                   required
                   id="name"
                   label="Name"
-                  value={kpi.name}
                   name="name"
-                  onChange={handleChange}
+                  placeholder="KPI Name"
+                  value={editForm.values.name}
+                  onChange={editForm.handleChange}
+                  onBlur={editForm.handleBlur}
+                  error={editForm.touched.name && Boolean(editForm.errors.name)}
+                  helperText={editForm.touched.name && editForm.errors.name}
                 />
               </FormControl>
             </Grid>
@@ -80,9 +95,15 @@ function EditKpiModal({
                   required
                   id="value"
                   label="Value"
-                  value={kpi.value}
+                  placeholder="KPI Value"
                   name="value"
-                  onChange={handleChange}
+                  value={editForm.values.value}
+                  onChange={editForm.handleChange}
+                  onBlur={editForm.handleBlur}
+                  error={
+                    editForm.touched.value && Boolean(editForm.errors.value)
+                  }
+                  helperText={editForm.touched.value && editForm.errors.value}
                 />
               </FormControl>
             </Grid>
@@ -92,9 +113,18 @@ function EditKpiModal({
                   required
                   id="description"
                   label="Description"
-                  value={kpi.description}
+                  placeholder="KPI Description"
                   name="description"
-                  onChange={handleChange}
+                  value={editForm.values.description}
+                  onChange={editForm.handleChange}
+                  onBlur={editForm.handleBlur}
+                  error={
+                    editForm.touched.description &&
+                    Boolean(editForm.errors.description)
+                  }
+                  helperText={
+                    editForm.touched.description && editForm.errors.description
+                  }
                 />
               </FormControl>
             </Grid>
@@ -106,17 +136,32 @@ function EditKpiModal({
           Cancel
         </Button>
         {type === 'new' && (
-          <Button variant="contained" onClick={handleClose} color="success">
+          <Button
+            variant="contained"
+            onClick={editForm.handleSubmit}
+            color="success"
+            disabled={!editForm.isValid || editForm.isSubmitting}
+          >
             Add
           </Button>
         )}
         {type === 'edit' && (
-          <Button variant="contained" onClick={handleClose} color="success">
+          <Button
+            variant="contained"
+            onClick={editForm.handleSubmit}
+            color="success"
+            disabled={!editForm.isValid || editForm.isSubmitting}
+          >
             Save
           </Button>
         )}
         {type === 'delete' && (
-          <Button variant="contained" onClick={handleClose} color="error">
+          <Button
+            variant="contained"
+            onClick={handleDelete}
+            color="error"
+            disabled={editForm.isSubmitting}
+          >
             Delete
           </Button>
         )}
