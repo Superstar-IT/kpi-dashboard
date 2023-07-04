@@ -1,18 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Typography, Button, Grid } from '@mui/material';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import EditKpiModal from './EditKpi';
 
 function PageHeader() {
   const [openModal, setOpenModal] = useState(false);
-
-  const handleClose = useCallback(
-    (value: any) => {
-      console.log({ value });
-      setOpenModal(false);
-    },
-    [setOpenModal]
-  );
 
   return (
     <Grid container justifyContent="space-between" alignItems="center">
@@ -33,7 +25,7 @@ function PageHeader() {
         <EditKpiModal
           open={openModal}
           selectedValue={null}
-          onClose={handleClose}
+          onClose={() => setOpenModal(false)}
           type="new"
         />
       </Grid>

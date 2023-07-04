@@ -6,13 +6,17 @@ import Head from 'next/head';
 import Router from 'next/router';
 import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import ThemeProvider from 'src/theme/ThemeProvider';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import createEmotionCache from 'src/createEmotionCache';
-import { SidebarProvider } from 'src/contexts/SidebarContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
+import ThemeProvider from 'src/theme/ThemeProvider';
+import createEmotionCache from 'src/createEmotionCache';
+import { SidebarProvider } from 'src/contexts/SidebarContext';
+import { KPIProvider } from '@/contexts/KPIContext';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -45,8 +49,11 @@ function TokyoApp(props: TokyoAppProps) {
       <SidebarProvider>
         <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
+            <KPIProvider>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </KPIProvider>
+            <ToastContainer />
           </LocalizationProvider>
         </ThemeProvider>
       </SidebarProvider>

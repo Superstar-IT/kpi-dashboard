@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext } from 'react';
 import { KPI } from '@/models/kpi';
 import {
   Button,
@@ -12,12 +12,14 @@ import {
   TextField
 } from '@mui/material';
 import { useFormik } from 'formik';
+
 import { KPISchema } from '@/schema/kpi.schema';
+import { KPIContext } from '@/contexts/KPIContext';
 
 export type EditKpiModalType = 'new' | 'edit' | 'delete';
 
 export type EditKpiModalProps = {
-  onClose: (value: KPI) => void;
+  onClose: () => void;
   open: boolean;
   selectedValue: KPI;
   type: EditKpiModalType;
@@ -29,17 +31,20 @@ function EditKpiModal({
   open,
   type
 }: EditKpiModalProps) {
+  const { removeKPI, updateKPI, addKPI } = useContext(KPIContext);
+
   const handleClose = () => {
     editForm.resetForm();
-    onClose(selectedValue);
+    onClose();
   };
 
   const handleDelete = useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault();
       editForm.setSubmitting(true);
+      removeKPI(selectedValue.id);
       editForm.setSubmitting(false);
-      onClose(selectedValue);
+      onClose();
     },
     [onClose]
   );
@@ -52,9 +57,21 @@ function EditKpiModal({
     },
     enableReinitialize: true,
     validationSchema: KPISchema,
-    onSubmit: (values) => {
-      console.log(values);
-      onClose({ ...selectedValue, ...values });
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      if (type === 'edit' && selectedValue?.id) {
+        if (
+          values.name !== selectedValue?.name ||
+          values.description !== selectedValue?.description ||
+          values.value !== selectedValue?.value
+        ) {
+          updateKPI(selectedValue.id, values as KPI);
+        }
+      } else if (type === 'new') {
+        addKPI(values as KPI);
+      }
+      setSubmitting(false);
+      handleClose();
     }
   });
 
